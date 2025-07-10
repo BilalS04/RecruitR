@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using RecruitR.Api.Data;
+using RecruitR.Api.Dtos;
 using RecruitR.Api.Models;
 
 namespace RecruitR.Api.Controllers
@@ -27,14 +28,21 @@ namespace RecruitR.Api.Controllers
 
         // POST: api/jobapplications
         [HttpPost]
-        public IActionResult Create(JobApplication job)
+        public IActionResult Create(JobApplicationCreateDto dto)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            job.AppliedDate = DateTime.UtcNow;
+            var job = new JobApplication
+            {
+                CompanyName = dto.CompanyName,
+                Position = dto.Position,
+                Status = dto.Status,
+                AppliedDate = DateTime.UtcNow
+            };
+
             _context.JobApplications.Add(job);
             _context.SaveChanges();
 

@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
 
-namespace RecruitR.Api.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace RecruitR.Api.Dtos
 {
-    public class JobApplication
+    public class JobApplicationCreateDto
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(100)]
         public string CompanyName { get; set; }
@@ -13,11 +13,11 @@ namespace RecruitR.Api.Models
         [Required]
         [StringLength(100)]
         public string Position { get; set; }
-        public DateTime AppliedDate { get; set; }
 
         [Required]
         [RegularExpression("Applied|Interview|Rejected|Offer|Accepted", 
             ErrorMessage = "Status must be one of: Applied, Interview, Rejected, Offer, Accepted")]
-        public string Status { get; set; } = "Applied";
+        public string Status { get; set; }
+
     }
 }
