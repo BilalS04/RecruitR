@@ -11,7 +11,7 @@ namespace RecruitR.Api.Data
         {
         }
 
-        public DbSet<JobApplication> JopApplications { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
 
     }
 }
