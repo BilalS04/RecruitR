@@ -1,0 +1,48 @@
+﻿@page "/jobapplications"
+@inject IHttpClientFactory HttpClientFactory
+@using RecruitR.Client.Models
+
+<h3>Job Applications</h3>
+
+@if (applications == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!applications.Any())
+{
+    <p>No applications found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var app in applications)
+            {
+                <tr>
+                    <td>@app.CompanyName</td>
+                    <td>@app.Position</td>
+                    <td>@app.Status</td>
+                    <td>@app.AppliedDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<JobApplication> applications;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = HttpClientFactory.CreateClient("RecruitRApi");
+        applications = await client.GetFromJsonAsync<List<JobApplication>>("api/jobapplications");
+    }
+}
